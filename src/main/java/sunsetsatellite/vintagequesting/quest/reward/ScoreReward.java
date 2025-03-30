@@ -1,9 +1,9 @@
 package sunsetsatellite.vintagequesting.quest.reward;
 
-import com.mojang.nbt.CompoundTag;
+import com.mojang.nbt.tags.CompoundTag;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.entity.player.EntityPlayer;
-import sunsetsatellite.vintagequesting.gui.generic.GuiString;
+import net.minecraft.core.entity.player.Player;
+import sunsetsatellite.vintagequesting.gui.generic.StringElement;
 import sunsetsatellite.vintagequesting.interfaces.IRenderable;
 import sunsetsatellite.vintagequesting.quest.Reward;
 import sunsetsatellite.vintagequesting.quest.template.reward.ScoreRewardTemplate;
@@ -24,7 +24,7 @@ public class ScoreReward extends Reward {
 	}
 
 	@Override
-	public void give(EntityPlayer player) {
+	public void give(Player player) {
 		if(!redeemed){
 			player.score += amount;
 			redeemed = true;
@@ -43,7 +43,7 @@ public class ScoreReward extends Reward {
 
 	@Override
 	public void renderSlot(Minecraft mc, List<IRenderable> renderables, int width) {
-		renderables.add(new GuiString(mc,"Score Reward:",0xFFFFFFFF));
-		renderables.add(new GuiString(mc,"Score +"+getAmount(),0xFF00FF00));
+		renderables.add(new StringElement(mc,"Score Reward:",0xFFFFFFFF));
+		renderables.add(new StringElement(mc,"Score +"+getAmount(),0xFF00FF00));
 	}
 }

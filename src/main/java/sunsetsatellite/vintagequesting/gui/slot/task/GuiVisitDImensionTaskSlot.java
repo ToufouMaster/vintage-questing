@@ -2,9 +2,10 @@ package sunsetsatellite.vintagequesting.gui.slot.task;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiTooltip;
+import net.minecraft.client.gui.TooltipElement;
 import net.minecraft.client.render.Lighting;
 import net.minecraft.core.block.Block;
+import net.minecraft.core.block.Blocks;
 import net.minecraft.core.item.ItemStack;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
@@ -18,14 +19,14 @@ public class GuiVisitDImensionTaskSlot extends Gui implements IRenderable {
 	public int height;
 	private final Minecraft mc;
 	private final VisitDimensionTask task;
-	private final GuiTooltip tooltip;
+	private final TooltipElement tooltip;
 
 	public GuiVisitDImensionTaskSlot(Minecraft mc, int width, int height, VisitDimensionTask task){
 		this.width = width;
         this.height = height;
 		this.mc = mc;
 		this.task = task;
-		this.tooltip = new GuiTooltip(mc);
+		this.tooltip = new TooltipElement(mc);
 	}
 
 	@Override
@@ -35,13 +36,13 @@ public class GuiVisitDImensionTaskSlot extends Gui implements IRenderable {
 			GL11.glEnable(GL11.GL_TEXTURE_2D);
 		}
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		ItemStack item = Block.portalNether.getDefaultStack();
+		ItemStack item = Blocks.PORTAL_NETHER.getDefaultStack();
 		ItemRenderHelper.renderItemStack(item, x + 4, y+2, 1, 1, 1,1);
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glDisable(GL11.GL_CULL_FACE);
 		Lighting.disable();
 
-		drawString(mc.fontRenderer, "Visit "+task.getDimension().getTranslatedName(),x+28, y+6, 0xFFFFFFFF);
+		drawString(mc.font, "Visit "+task.getDimension().getTranslatedName(),x+28, y+6, 0xFFFFFFFF);
 
 		if(mouseX > x+3 && mouseX < x+21 && mouseY > y+3 && mouseY < y+21){
 

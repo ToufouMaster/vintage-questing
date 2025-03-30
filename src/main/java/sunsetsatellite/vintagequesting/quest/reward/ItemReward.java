@@ -1,10 +1,10 @@
 package sunsetsatellite.vintagequesting.quest.reward;
 
-import com.mojang.nbt.CompoundTag;
+import com.mojang.nbt.tags.CompoundTag;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.entity.player.EntityPlayer;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.core.item.ItemStack;
-import sunsetsatellite.vintagequesting.gui.generic.GuiString;
+import sunsetsatellite.vintagequesting.gui.generic.StringElement;
 import sunsetsatellite.vintagequesting.gui.slot.reward.GuiItemRewardSlot;
 import sunsetsatellite.vintagequesting.interfaces.IRenderable;
 import sunsetsatellite.vintagequesting.quest.Reward;
@@ -26,7 +26,7 @@ public class ItemReward extends Reward {
 	}
 
 	@Override
-	public void give(EntityPlayer player) {
+	public void give(Player player) {
 		if(!redeemed){
 			ItemStack stack = item.copy();
 			player.inventory.insertItem(stack,true);
@@ -49,7 +49,7 @@ public class ItemReward extends Reward {
 
 	@Override
 	public void renderSlot(Minecraft mc, List<IRenderable> renderables, int width) {
-		renderables.add(new GuiString(mc,"Item Reward:",0xFFFFFFFF));
+		renderables.add(new StringElement(mc,"Item Reward:",0xFFFFFFFF));
 		renderables.add(new GuiItemRewardSlot(mc,width / 2 - 38,24, this));
 	}
 }

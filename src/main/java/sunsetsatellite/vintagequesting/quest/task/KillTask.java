@@ -1,16 +1,12 @@
 package sunsetsatellite.vintagequesting.quest.task;
 
-import com.mojang.nbt.CompoundTag;
+import com.mojang.nbt.tags.CompoundTag;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.entity.Entity;
-import net.minecraft.core.entity.EntityDispatcher;
-import net.minecraft.core.item.ItemStack;
-import sunsetsatellite.vintagequesting.gui.generic.GuiString;
-import sunsetsatellite.vintagequesting.gui.slot.task.GuiCraftingTaskSlot;
+import sunsetsatellite.vintagequesting.gui.generic.StringElement;
 import sunsetsatellite.vintagequesting.gui.slot.task.GuiKillTaskSlot;
 import sunsetsatellite.vintagequesting.interfaces.IRenderable;
 import sunsetsatellite.vintagequesting.quest.Task;
-import sunsetsatellite.vintagequesting.quest.template.task.CraftingTaskTemplate;
 import sunsetsatellite.vintagequesting.quest.template.task.KillTaskTemplate;
 
 import java.util.List;
@@ -72,7 +68,7 @@ public class KillTask extends Task {
 
 	@Override
 	public void renderSlot(Minecraft mc, List<IRenderable> renderables, int i, int width) {
-		renderables.add(new GuiString(mc, (i+1)+". "+this.getTranslatedTypeName(), 0xFFFFFFFF));
+		renderables.add(new StringElement(mc, (i+1)+". "+this.getTranslatedTypeName(), 0xFFFFFFFF));
 		renderables.add(new GuiKillTaskSlot(mc, width / 2 - 48, 24, this));
 	}
 }

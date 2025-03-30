@@ -1,6 +1,6 @@
 package sunsetsatellite.vintagequesting.quest;
 
-import com.mojang.nbt.CompoundTag;
+import com.mojang.nbt.tags.CompoundTag;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.lang.I18n;
 import sunsetsatellite.vintagequesting.interfaces.IRenderable;

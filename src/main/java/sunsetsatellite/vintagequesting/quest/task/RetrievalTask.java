@@ -1,14 +1,13 @@
 package sunsetsatellite.vintagequesting.quest.task;
 
-import com.mojang.nbt.CompoundTag;
+import com.mojang.nbt.tags.CompoundTag;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.entity.player.EntityPlayer;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.net.command.TextFormatting;
-import sunsetsatellite.vintagequesting.gui.generic.GuiString;
+import sunsetsatellite.vintagequesting.gui.generic.StringElement;
 import sunsetsatellite.vintagequesting.gui.slot.task.GuiRetrievalTaskSlot;
 import sunsetsatellite.vintagequesting.interfaces.IRenderable;
-import sunsetsatellite.vintagequesting.mixin.EntityPlayerMixin;
 import sunsetsatellite.vintagequesting.quest.Task;
 import sunsetsatellite.vintagequesting.quest.template.task.RetrievalTaskTemplate;
 
@@ -28,7 +27,7 @@ public class RetrievalTask extends Task {
 		this.checksNbt = template.checksNbt();
 	}
 
-	public int setProgress(ItemStack stack, EntityPlayer player) {
+	public int setProgress(ItemStack stack, Player player) {
 		if(stack == null) return -1;
 		if(stack.isItemEqual(requirement)){
 			if(checksNbt && !(stack.getData().equals(requirement.getData()))){
@@ -84,7 +83,7 @@ public class RetrievalTask extends Task {
 
 	@Override
 	public void renderSlot(Minecraft mc, List<IRenderable> renderables, int i, int width) {
-		renderables.add(new GuiString(mc, (i+1)+". "+this.getTranslatedTypeName()+" | Consume: "+ (this.canConsume() ? TextFormatting.RED : TextFormatting.WHITE) +  this.canConsume(), 0xFFFFFFFF));
+		renderables.add(new StringElement(mc, (i+1)+". "+this.getTranslatedTypeName()+" | Consume: "+ (this.canConsume() ? TextFormatting.RED : TextFormatting.WHITE) +  this.canConsume(), 0xFFFFFFFF));
 		renderables.add(new GuiRetrievalTaskSlot(mc, width / 2 - 48, 24, this));
 	}
 

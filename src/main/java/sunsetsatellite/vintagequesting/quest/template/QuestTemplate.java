@@ -1,5 +1,6 @@
 package sunsetsatellite.vintagequesting.quest.template;
 
+import net.minecraft.core.achievement.Achievement;
 import net.minecraft.core.item.IItemConvertible;
 import net.minecraft.core.lang.I18n;
 import sunsetsatellite.vintagequesting.VintageQuesting;
@@ -15,9 +16,6 @@ public class QuestTemplate {
 	protected String description;
 	protected int x = 0;
 	protected int y = 0;
-	protected int width = 32;
-	protected int height = 32;
-	protected int iconSize = 1;
 	protected IItemConvertible icon;
 	protected Logic questLogic;
 	protected Logic taskLogic;
@@ -26,8 +24,7 @@ public class QuestTemplate {
 	protected List<TaskTemplate> tasks = new ArrayList<>();
 	protected List<QuestTemplate> preRequisites = new ArrayList<>();
 	protected List<RewardTemplate> rewards = new ArrayList<>();
-
-	protected Quest cache;
+	public Achievement.Type type = Achievement.TYPE_NORMAL;
 
 	public QuestTemplate(String id, String name, String description, IItemConvertible icon, Logic questLogic, Logic taskLogic) {
 		this.id = id;
@@ -51,24 +48,6 @@ public class QuestTemplate {
 
 	public String getId() {
 		return id;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public QuestTemplate setWidth(int width) {
-		this.width = width;
-		return this;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
-	public QuestTemplate setHeight(int height) {
-		this.height = height;
-		return this;
 	}
 
 	public int getX() {
@@ -99,12 +78,12 @@ public class QuestTemplate {
 		return this;
 	}
 
-	public int getIconSize() {
-		return iconSize;
+	public Achievement.Type getType() {
+		return type;
 	}
 
-	public QuestTemplate setIconSize(int iconSize) {
-		this.iconSize = iconSize;
+	public QuestTemplate setType(Achievement.Type type) {
+		this.type = type;
 		return this;
 	}
 
@@ -204,17 +183,5 @@ public class QuestTemplate {
 	public QuestTemplate setRewards(List<RewardTemplate> rewards) {
 		this.rewards = rewards;
 		return this;
-	}
-
-	public Quest getInstance(){
-		return cache == null ? cache = getInstanceUnique() : cache;
-	}
-
-	public Quest getInstanceUnique(){
-		return new Quest(this);
-	}
-
-	public void reset(){
-		cache = null;
 	}
 }

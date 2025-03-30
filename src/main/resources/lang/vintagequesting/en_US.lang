@@ -8,3 +8,4 @@ type.task.vq.kill.name=Kill Task
 type.task.vq.visitDimension.name=Visit Dimension Task
 
 gui.vq.quest.label.complete=Quest complete!
+gui.vq.questbook.label.title=Quests

@@ -1,14 +1,13 @@
 package sunsetsatellite.vintagequesting.gui;
 
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.ButtonElement;
+import net.minecraft.client.gui.Screen;
 import net.minecraft.core.item.ItemStack;
 import org.lwjgl.opengl.GL11;
+import sunsetsatellite.catalyst.Catalyst;
 import sunsetsatellite.vintagequesting.VintageQuesting;
-import sunsetsatellite.vintagequesting.gui.generic.GuiMessageBox;
-import sunsetsatellite.vintagequesting.gui.generic.GuiVerticalContainer;
-import sunsetsatellite.vintagequesting.interfaces.IHasQuests;
-import sunsetsatellite.vintagequesting.quest.Chapter;
+import sunsetsatellite.vintagequesting.gui.generic.MessageBoxElement;
+import sunsetsatellite.vintagequesting.gui.generic.VerticalContainerElement;
 import sunsetsatellite.vintagequesting.quest.Quest;
 import sunsetsatellite.vintagequesting.quest.Reward;
 import sunsetsatellite.vintagequesting.quest.Task;
@@ -20,37 +19,38 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GuiQuestInfo extends GuiScreen {
+public class ScreenQuestInfo extends Screen {
 
 	protected Quest quest;
-	protected GuiQuestbook parent;
-	protected GuiMessageBox messageBox;
-	protected GuiVerticalContainer rewardContainer;
-	protected GuiVerticalContainer taskContainer;
-	protected GuiButton claimButton;
-	protected GuiButton submitButton;
+	protected ScreenQuestbook parent;
+	protected MessageBoxElement messageBox;
+	protected VerticalContainerElement rewardContainer;
+	protected VerticalContainerElement taskContainer;
+	protected ButtonElement claimButton;
+	protected ButtonElement submitButton;
 
-	public GuiQuestInfo(GuiQuestbook parent, Quest quest) {
+	public ScreenQuestInfo(ScreenQuestbook parent, Quest quest) {
 		super(parent);
 		this.quest = quest;
 		this.parent = parent;
 	}
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTick) {
-		drawRectWidthHeight(0,0,width,height,0xFF404040);
+	public void render(int mouseX, int mouseY, float partialTick) {
+		renderTexturedBackground();
+		//drawRectWidthHeight(0,0,width,height,0xFF404040);
 		GL11.glEnable(3553);
 
 		drawLineVertical(width/2,24,height-32,0xFFFFFFFF);
 
-		drawStringCentered(fontRenderer,quest.getTranslatedName(),width/2,8,0xFFFFFFFF);
-		drawStringCentered(fontRenderer,"Rewards:",width / 4,height / 2 + 10,0xFFFFFFFF);
+		drawStringCentered(font,quest.getTranslatedName(),width/2,8,0xFFFFFFFF);
+		drawStringCentered(font,"Rewards:",width / 4,height / 2 + 10,0xFFFFFFFF);
 		if(quest.getRewards().isEmpty()){
-			drawStringCentered(fontRenderer,"No rewards :(",width / 4,height / 2 + 34,0xFF808080);
+			drawStringCentered(font,"No rewards :(",width / 4,height / 2 + 34,0xFF808080);
 		}
-		drawStringCentered(fontRenderer,"Tasks:",width - (width / 4) - 8 ,24,0xFFFFFFFF);
+		drawStringCentered(font,"Tasks:",width - (width / 4) - 8 ,24,0xFFFFFFFF);
 		if(quest.getTasks().isEmpty()){
-			drawStringCentered(fontRenderer,"No tasks.",width - (width / 4) ,48,0xFF808080);
+			drawStringCentered(font,"No tasks.",width - (width / 4) ,48,0xFF808080);
 		}
 
 		messageBox.render(8,24,mouseX,mouseY);
@@ -58,16 +58,16 @@ public class GuiQuestInfo extends GuiScreen {
 		rewardContainer.render(8,height / 2 + 12,mouseX,mouseY);
 		taskContainer.render(width / 2 + 12 ,36,mouseX,mouseY);
 
-		super.drawScreen(mouseX, mouseY, partialTick);
+		super.render(mouseX, mouseY, partialTick);
 	}
 
 	@Override
 	public void init() {
-		messageBox = new GuiMessageBox(width / 2 - 24,height / 3 + 24,
+		messageBox = new MessageBoxElement(width / 2 - 24,height / 3 + 24,
 			quest.getTranslatedDescription(),
-			((width / 2 - 24) / fontRenderer.getCharWidth('m')) + 4);
-		rewardContainer = new GuiVerticalContainer(width / 2 - 24,height / 3,8);
-		taskContainer = new GuiVerticalContainer(width / 2 - 24,height - (48*2) + 3,8);
+			((width / 2 - 24) / font.getCharWidth('m')) + 4);
+		rewardContainer = new VerticalContainerElement(width / 2 - 24,height / 3,8);
+		taskContainer = new VerticalContainerElement(width / 2 - 24,height - (48*2) + 3,8);
 		for (Reward reward : quest.getRewards()) {
 			reward.renderSlot(mc,rewardContainer.renderables,width);
 		}
@@ -78,18 +78,18 @@ public class GuiQuestInfo extends GuiScreen {
 			task.renderSlot(mc,taskContainer.renderables,i,width);
 		}
 
-		controlList.add(new GuiButton(0,width/2 - 30, height-24, 60, 20, "Back"));
-		controlList.add(claimButton = new GuiButton(1,width / 4 - 120, height-24, 200, 20, "Claim"));
-		controlList.add(submitButton = new GuiButton(2,width - (width / 4) - 80, height-24, 200, 20, "Submit"));
+		buttons.add(new ButtonElement(0,width/2 - 30, height-24, 60, 20, "Back"));
+		buttons.add(claimButton = new ButtonElement(1,width / 4 - 120, height-24, 200, 20, "Claim"));
+		buttons.add(submitButton = new ButtonElement(2,width - (width / 4) - 80, height-24, 200, 20, "Submit"));
 		super.init();
 	}
 
 	@Override
-	public void mouseMovedOrButtonReleased(int mouseX, int mouseY, int mouseButton) {
-		messageBox.mouseMovedOrUp(mouseX,mouseY,mouseButton);
-
-		super.mouseMovedOrButtonReleased(mouseX, mouseY, mouseButton);
+	public void mouseReleased(int mx, int my, int buttonNum) {
+		messageBox.mouseMovedOrUp(mx,my,buttonNum);
+		super.mouseReleased(mx, my, buttonNum);
 	}
+
 
 	@Override
 	public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
@@ -101,26 +101,26 @@ public class GuiQuestInfo extends GuiScreen {
 	}
 
 	@Override
-	protected void buttonPressed(GuiButton button) {
+	protected void buttonClicked(ButtonElement button) {
 		if(button.id == 0){
-			this.mc.displayGuiScreen(getParentScreen());
+			this.mc.displayScreen(getParentScreen());
 		} else if (button == claimButton) {
 			for (Reward reward : quest.getRewards()) {
 				reward.give(mc.thePlayer);
 			}
 		} else if (button == submitButton) {
-			ArrayList<ItemStack> stacks = VintageQuesting.condenseItemList(Arrays.stream(mc.thePlayer.inventory.mainInventory).collect(Collectors.toList()));
-			for (Chapter chapter : ((IHasQuests) mc.thePlayer).getQuestGroup().chapters) {
+			ArrayList<ItemStack> stacks = Catalyst.condenseItemList(Arrays.stream(mc.thePlayer.inventory.mainInventory).collect(Collectors.toList()));
+			for (QuestChapterPage chapter : VintageQuesting.CHAPTERS) {
 				for (Quest chapterQuest : chapter.getQuests()) {
 					if(chapterQuest.isCompleted()) continue;
 					for (Task task : chapterQuest.getTasks()) {
 						if(task instanceof RetrievalTask){
 							((RetrievalTask) task).resetProgress();
 							for (ItemStack stack : stacks) {
-								((RetrievalTask) task).setProgress(stack,parent.player);
+								((RetrievalTask) task).setProgress(stack, mc.thePlayer);
 							}
 						} else if (task instanceof VisitDimensionTask) {
-							((VisitDimensionTask) task).check(parent.player);
+							((VisitDimensionTask) task).check(mc.thePlayer);
 						}
 					}
 				}
@@ -135,6 +135,10 @@ public class GuiQuestInfo extends GuiScreen {
 			claimButton.displayString = "Prerequisites not completed!";
 		} else {
 			claimButton.displayString = "Claim";
+		}
+		if(mc.currentWorld.isClientSide){
+			claimButton.enabled = false;
+			claimButton.displayString = "Can't claim in multiplayer yet.";
 		}
 		submitButton.enabled = !quest.isCompleted();
 	}

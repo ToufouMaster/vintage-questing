@@ -16,7 +16,7 @@ public class ItemRenderHelper {
 	public static Minecraft mc;
 	private static void initMC(){
 		if (mc == null){
-			mc = Minecraft.getMinecraft(ItemRenderHelper.class);
+			mc = Minecraft.getMinecraft();
 		}
 	}
 	public static void renderItemStack(@Nullable ItemStack itemStack, int x, int y, double scaleX, double scaleY, float brightness, float alpha){
@@ -32,7 +32,7 @@ public class ItemRenderHelper {
 			ItemModel itemModel = ItemModelDispatcher.getInstance().getDispatch(itemStack.getItem());
 			GL11.glTranslatef(x, y, 0);
 			GL11.glScaled(scaleX,scaleY,1);
-			itemModel.renderItemIntoGui(Tessellator.instance, mc.fontRenderer, mc.renderEngine, itemStack, 0, 0, brightness, alpha);
+			itemModel.renderItemIntoGui(Tessellator.instance, mc.font, mc.textureManager, itemStack, 0, 0, brightness, alpha);
 		}
 
 

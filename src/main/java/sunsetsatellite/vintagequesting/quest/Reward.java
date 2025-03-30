@@ -1,8 +1,8 @@
 package sunsetsatellite.vintagequesting.quest;
 
-import com.mojang.nbt.CompoundTag;
+import com.mojang.nbt.tags.CompoundTag;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.entity.player.EntityPlayer;
+import net.minecraft.core.entity.player.Player;
 import sunsetsatellite.vintagequesting.interfaces.IRenderable;
 import sunsetsatellite.vintagequesting.quest.template.RewardTemplate;
 
@@ -18,7 +18,7 @@ public abstract class Reward {
 
 	public boolean redeemed;
 
-	public abstract void give(EntityPlayer player);
+	public abstract void give(Player player);
 
 	public boolean isRedeemed(){
 		return redeemed;

@@ -1,12 +1,14 @@
 package sunsetsatellite.vintagequesting.quest;
 
-import com.mojang.nbt.CompoundTag;
+import com.mojang.nbt.tags.CompoundTag;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.render.stitcher.IconCoordinate;
 import net.minecraft.core.Global;
 import net.minecraft.core.item.IItemConvertible;
 import net.minecraft.core.lang.I18n;
-import sunsetsatellite.vintagequesting.interfaces.IGuiQuestComplete;
+import sunsetsatellite.vintagequesting.VintageQuesting;
+import sunsetsatellite.vintagequesting.gui.QuestChapterPage;
+import sunsetsatellite.vintagequesting.gui.QuestToast;
+import sunsetsatellite.vintagequesting.interfaces.IHasQuests;
 import sunsetsatellite.vintagequesting.quest.template.QuestTemplate;
 import sunsetsatellite.vintagequesting.quest.template.RewardTemplate;
 import sunsetsatellite.vintagequesting.quest.template.TaskTemplate;
@@ -20,8 +22,6 @@ public class Quest {
 	protected String description;
 	protected int x;
 	protected int y;
-	protected int width;
-	protected int height;
 	protected int iconSize;
 	protected IItemConvertible icon;
 	protected Logic questLogic;
@@ -33,17 +33,16 @@ public class Quest {
 	protected List<Reward> rewards;
 	protected final QuestTemplate template;
 	protected boolean complete;
+	protected QuestChapterPage page;
 
-	public Quest(QuestTemplate template) {
+	public Quest(QuestTemplate template, QuestChapterPage page) {
 		this.template = template;
 		this.name = template.getName();
 		this.description = template.getDescription();
 		this.x = template.getX();
 		this.y = template.getY();
-		this.width = template.getWidth();
-		this.height = template.getHeight();
 		this.icon = template.getIcon();
-		this.iconSize = template.getIconSize();
+		this.iconSize = 1;
 		this.repeat = template.isRepeat();
 		this.repeatTicks = template.getRepeatTicks();
 		this.questLogic = template.getQuestLogic();
@@ -54,9 +53,6 @@ public class Quest {
 		for (TaskTemplate task : template.getTasks()) {
 			taskList.add(task.getInstance());
 		}
-		for (QuestTemplate preRequisite : template.getPreRequisites()) {
-            preRequisiteList.add(preRequisite.getInstance());
-        }
         for (RewardTemplate reward : template.getRewards()) {
             rewardList.add(reward.getInstance());
         }
@@ -65,22 +61,20 @@ public class Quest {
         this.rewards = rewardList;
 	}
 
-	public int getWidth() {
-		return width;
+	public void setupPrerequisites(){
+		this.preRequisites = new ArrayList<>();
+		for (QuestTemplate preRequisite : template.getPreRequisites()) {
+			for (QuestChapterPage chapter : VintageQuesting.CHAPTERS) {
+				Quest quest = chapter.getQuest(preRequisite);
+				if(quest != null){
+					this.preRequisites.add(quest);
+				}
+			}
+		}
 	}
 
-	public Quest setWidth(int width) {
-		this.width = width;
-		return this;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
-	public Quest setHeight(int height) {
-		this.height = height;
-		return this;
+	public QuestChapterPage getPage() {
+		return page;
 	}
 
 	public int getX() {
@@ -218,7 +212,7 @@ public class Quest {
 			case AND:
 				if (tasks.stream().allMatch(Task::isCompleted)){
 					if (!complete && !Global.isServer) {
-						((IGuiQuestComplete) Minecraft.getMinecraft(this)).getGuiQuestComplete().queueQuestComplete(this);
+						Minecraft.getMinecraft().guiToasts.addToast(new QuestToast(this));
 						complete = true;
 					}
 					return true;
@@ -227,7 +221,7 @@ public class Quest {
 			case OR:
 				if (tasks.stream().anyMatch(Task::isCompleted)){
 					if (!complete && !Global.isServer) {
-						((IGuiQuestComplete) Minecraft.getMinecraft(this)).getGuiQuestComplete().queueQuestComplete(this);
+						Minecraft.getMinecraft().guiToasts.addToast(new QuestToast(this));
 						complete = true;
 					}
 					return true;

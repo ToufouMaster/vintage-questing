@@ -1,10 +1,10 @@
 package sunsetsatellite.vintagequesting.quest.task;
 
-import com.mojang.nbt.CompoundTag;
+import com.mojang.nbt.tags.CompoundTag;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.entity.player.EntityPlayer;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.core.world.Dimension;
-import sunsetsatellite.vintagequesting.gui.generic.GuiString;
+import sunsetsatellite.vintagequesting.gui.generic.StringElement;
 import sunsetsatellite.vintagequesting.gui.slot.task.GuiVisitDImensionTaskSlot;
 import sunsetsatellite.vintagequesting.interfaces.IRenderable;
 import sunsetsatellite.vintagequesting.quest.Task;
@@ -22,7 +22,7 @@ public class VisitDimensionTask extends Task {
 		dimension = template.getDimension();
 	}
 
-	public void check(EntityPlayer player) {
+	public void check(Player player) {
 		if(!visited) visited = player.dimension == dimension.id;
     }
 
@@ -52,7 +52,7 @@ public class VisitDimensionTask extends Task {
 
 	@Override
 	public void renderSlot(Minecraft mc, List<IRenderable> renderables, int i, int width) {
-		renderables.add(new GuiString(mc, (i+1)+". "+this.getTranslatedTypeName(), 0xFFFFFFFF));
+		renderables.add(new StringElement(mc, (i+1)+". "+this.getTranslatedTypeName(), 0xFFFFFFFF));
 		renderables.add(new GuiVisitDImensionTaskSlot(mc, width / 2 - 48, 20, this));
 	}
 

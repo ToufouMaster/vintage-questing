@@ -13,7 +13,7 @@ import sunsetsatellite.vintagequesting.interfaces.IRenderable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuiVerticalContainer
+public class VerticalContainerElement
     extends Gui
 {
     private final Minecraft mc;
@@ -33,11 +33,11 @@ public class GuiVerticalContainer
 	private int lastY;
 	private final int elementSpacing;
 
-    public GuiVerticalContainer(int width, int height, int elementSpacing)
+    public VerticalContainerElement(int width, int height, int elementSpacing)
     {
         this.width = width;
 		this.elementSpacing = elementSpacing;
-        this.mc = Minecraft.getMinecraft(this);
+        this.mc = Minecraft.getMinecraft();
         this.height = height;
     }
 
@@ -46,12 +46,12 @@ public class GuiVerticalContainer
         return height;
     }
 
-	public GuiVerticalContainer setHeight(int height) {
+	public VerticalContainerElement setHeight(int height) {
 		this.height = height;
 		return this;
 	}
 
-	public GuiVerticalContainer setWidth(int width) {
+	public VerticalContainerElement setWidth(int width) {
 		this.width = width;
 		return this;
 	}

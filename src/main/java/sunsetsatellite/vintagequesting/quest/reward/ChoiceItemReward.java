@@ -1,11 +1,10 @@
 package sunsetsatellite.vintagequesting.quest.reward;
 
-import com.mojang.nbt.CompoundTag;
+import com.mojang.nbt.tags.CompoundTag;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.entity.player.EntityPlayer;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.core.item.ItemStack;
-import sunsetsatellite.vintagequesting.gui.generic.GuiString;
-import sunsetsatellite.vintagequesting.gui.slot.reward.GuiChoiceItemRewardSlot;
+import sunsetsatellite.vintagequesting.gui.generic.StringElement;
 import sunsetsatellite.vintagequesting.interfaces.IRenderable;
 import sunsetsatellite.vintagequesting.quest.Reward;
 import sunsetsatellite.vintagequesting.quest.template.reward.ChoiceItemRewardTemplate;
@@ -36,7 +35,7 @@ public class ChoiceItemReward extends Reward {
 	}
 
 	@Override
-	public void give(EntityPlayer player) {
+	public void give(Player player) {
 		if(chosen == null) return;
 		if(!redeemed){
 			ItemStack stack = chosen.copy();
@@ -60,10 +59,10 @@ public class ChoiceItemReward extends Reward {
 
 	@Override
 	public void renderSlot(Minecraft mc, List<IRenderable> renderables, int width) {
-		renderables.add(new GuiString(mc,"Choice Item Reward:",0xFFFFFFFF));
-		for (int i = 0; i < stacks.size(); i++) {
-			renderables.add(new GuiChoiceItemRewardSlot(mc,width / 2 - 38,24, this,i));
-		}
+		renderables.add(new StringElement(mc,"Choice Item Reward:",0xFFFFFFFF));
+		//for (int i = 0; i < stacks.size(); i++) {
+		//	renderables.add(new GuiChoiceItemRewardSlot(mc,width / 2 - 38,24, this,i));
+		//}
 
 	}
 }

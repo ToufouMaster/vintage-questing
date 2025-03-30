@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GuiMessageBox
+public class MessageBoxElement
     extends Gui
 {
     private final Minecraft minecraft;
@@ -31,11 +31,11 @@ public class GuiMessageBox
     private int clickY;
     private float previousScrollAmount = 0.0f;
 
-    public GuiMessageBox(int width, int height, String text, int chars)
+    public MessageBoxElement(int width, int height, String text, int chars)
     {
         this.width = width;
 
-        this.minecraft = Minecraft.getMinecraft(this);
+        this.minecraft = Minecraft.getMinecraft();
         this.height = height;
 
 		this.chars = chars;
@@ -112,7 +112,7 @@ public class GuiMessageBox
     }
 
 
-	public GuiMessageBox setText(String text) {
+	public MessageBoxElement setText(String text) {
 		this.text = text;
 		setupText(text,chars);
 		return this;
@@ -139,7 +139,7 @@ public class GuiMessageBox
         // Draw lines
         for (int i = 0; i < lines.size(); i++)
         {
-            minecraft.fontRenderer.drawStringWithShadow(lines.get(i),x + 4,(y + 4) + (i * 12) - getScrollPixels(),0xFFFFFFFF);
+            minecraft.font.drawStringWithShadow(lines.get(i),x + 4,(y + 4) + (i * 12) - getScrollPixels(),0xFFFFFFFF);
         }
 
         Scissor.disable();

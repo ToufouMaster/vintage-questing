@@ -2,7 +2,7 @@ package sunsetsatellite.vintagequesting.gui.slot.task;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.render.FontRenderer;
+import net.minecraft.client.render.Font;
 import org.lwjgl.opengl.GL11;
 import sunsetsatellite.vintagequesting.interfaces.IClickable;
 import sunsetsatellite.vintagequesting.interfaces.IRenderable;
@@ -42,10 +42,10 @@ public class GuiClickTaskSlot extends Gui implements IRenderable, IClickable {
 	public void render(int x, int y, int mouseX, int mouseY) {
 		if (this.visible) {
 			this.string = task.isCompleted() ? "✔" : "❌";
-			FontRenderer fontrenderer = mc.fontRenderer;
+			Font fontRenderer = mc.font;
 			boolean mouseOver = mouseX >= x && mouseY >= y && mouseX < x + this.width && mouseY < y + this.height;
 			int state = this.getButtonState(mouseOver);
-			GL11.glBindTexture(3553, mc.renderEngine.getTexture("/assets/minecraft/textures/gui/gui.png"));
+			mc.textureManager.loadTexture("/assets/vq/textures/gui/gui.png").bind();
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 			this.drawTexturedModalRect(x, y, 0, 46 + state * 20, this.width / 2, this.height);
 			this.drawTexturedModalRect(x + this.width / 2, y, 200 - this.width / 2, 46 + state * 20, this.width / 2, this.height);
@@ -62,7 +62,7 @@ public class GuiClickTaskSlot extends Gui implements IRenderable, IClickable {
 					textColor = 16777120;
 			}
 
-			this.drawStringCentered(fontrenderer, this.string, x + this.width / 2, y + (this.height - 8) / 2, textColor);
+			this.drawStringCentered(fontRenderer, this.string, x + this.width / 2, y + (this.height - 8) / 2, textColor);
 		}
 	}
 
