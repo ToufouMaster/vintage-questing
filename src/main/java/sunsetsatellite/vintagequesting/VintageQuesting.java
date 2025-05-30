@@ -23,7 +23,7 @@ import java.util.Optional;
 
 
 public class VintageQuesting implements ModInitializer, RecipeEntrypoint, GameStartEntrypoint, ClientStartEntrypoint {
-    public static final String MOD_ID = "vintagequesting";
+    public static final String MOD_ID = "vintage-questing";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 	public static ChapterRegistry CHAPTERS = new ChapterRegistry();
