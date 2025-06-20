@@ -40,7 +40,7 @@ public class PlayerMixin {
 		if(chapters != null) {
 			Map<String, Tag<?>> chapterMap = chapters.getValue();
 			if (chapters.getValues().isEmpty()) {
-				VintageQuesting.LOGGER.warn("No data. Loading defaults...");
+				//VintageQuesting.LOGGER.warn("No data. Loading defaults...");
 				for (QuestChapterPage chapter : VintageQuesting.CHAPTERS) {
 					//questGroup.quests.addAll(chapter.getQuests());
 				}
@@ -84,7 +84,7 @@ public class PlayerMixin {
 				}
 			}
 		} else {
-			VintageQuesting.LOGGER.warn("No data. Loading defaults...");
+			//VintageQuesting.LOGGER.warn("No data. Loading defaults...");
 			for (QuestChapterPage chapter : VintageQuesting.CHAPTERS) {
 				//questGroup.quests.addAll(chapter.getQuests());
 			}
