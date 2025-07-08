@@ -40,7 +40,7 @@ public class MessageBoxElement
 
 		this.chars = chars;
 
-		setupText(text, chars);
+		setupText(text, Math.max(1,chars));
 	}
 
 	private void setupText(String text, int limit) {
@@ -114,7 +114,7 @@ public class MessageBoxElement
 
 	public MessageBoxElement setText(String text) {
 		this.text = text;
-		setupText(text,chars);
+		setupText(text,Math.max(1,chars));
 		return this;
 	}
 

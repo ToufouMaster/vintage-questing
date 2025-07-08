@@ -48,7 +48,7 @@ public class ScreenQuestInfo extends Screen {
 		if(quest.getRewards().isEmpty()){
 			drawStringCentered(font,"No rewards :(",width / 4,height / 2 + 34,0xFF808080);
 		}
-		drawStringCentered(font,"Tasks:",width - (width / 4) - 8 ,24,0xFFFFFFFF);
+		drawStringCentered(font,"Tasks ("+quest.getTaskLogic()+"):",width - (width / 4) - 8 ,24,0xFFFFFFFF);
 		if(quest.getTasks().isEmpty()){
 			drawStringCentered(font,"No tasks.",width - (width / 4) ,48,0xFF808080);
 		}

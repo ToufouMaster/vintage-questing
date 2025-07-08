@@ -232,6 +232,7 @@ public class Quest {
 	}
 
 	public boolean preRequisitesCompleted(){
+		if(preRequisites.isEmpty()) return true;
 		switch (taskLogic){
 			case AND:
 				return preRequisites.stream().allMatch(Quest::isCompleted);
