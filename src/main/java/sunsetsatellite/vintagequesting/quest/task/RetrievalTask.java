@@ -19,17 +19,19 @@ public class RetrievalTask extends Task {
 	protected int progress = 0;
 	protected boolean canConsume;
 	protected boolean checksNbt;
+	protected boolean ignoreMeta;
 
 	public RetrievalTask(RetrievalTaskTemplate template) {
 		super(template);
 		this.requirement = template.getStack();
 		this.canConsume = template.canConsume();
 		this.checksNbt = template.checksNbt();
+		this.ignoreMeta = template.ignoresMeta();
 	}
 
 	public int setProgress(ItemStack stack, Player player) {
 		if(stack == null) return -1;
-		if(stack.isItemEqual(requirement)){
+		if(stack.isItemEqual(requirement) || (ignoreMeta && stack.itemID == requirement.itemID)){
 			if(checksNbt && !(stack.getData().equals(requirement.getData()))){
 				return -1;
 			}
@@ -92,4 +94,6 @@ public class RetrievalTask extends Task {
 	}
 
 	public boolean checksNbt() {return checksNbt;}
+
+	public boolean ignoresMeta() {return ignoreMeta;}
 }

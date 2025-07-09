@@ -10,6 +10,7 @@ public class CraftingTaskTemplate extends TaskTemplate {
 	protected ItemStack requirement;
 	protected boolean canConsume;
 	protected boolean checkNbt;
+	protected boolean ignoreMeta;
 	protected Task cache;
 
 	public CraftingTaskTemplate(String id, ItemStack stack) {
@@ -51,9 +52,16 @@ public class CraftingTaskTemplate extends TaskTemplate {
 		return this;
 	}
 
+	public CraftingTaskTemplate setIgnoreMeta() {
+		this.ignoreMeta = true;
+		return this;
+	}
+
 	public boolean canConsume() {
 		return canConsume;
 	}
 
 	public boolean checksNbt() {return checkNbt;}
+
+	public boolean ignoresMeta() {return ignoreMeta;}
 }

@@ -11,6 +11,7 @@ public class RetrievalTaskTemplate extends TaskTemplate {
 	protected ItemStack requirement;
 	protected boolean canConsume;
 	protected boolean checkNbt;
+	protected boolean ignoreMeta;
 
 	public RetrievalTaskTemplate(String id, ItemStack stack) {
 		super(id,"type.task.vq.retrieval");
@@ -51,9 +52,16 @@ public class RetrievalTaskTemplate extends TaskTemplate {
 		return this;
 	}
 
+	public RetrievalTaskTemplate setIgnoreMeta() {
+		this.ignoreMeta = true;
+		return this;
+	}
+
 	public boolean canConsume() {
 		return canConsume;
 	}
 
 	public boolean checksNbt() {return checkNbt;}
+
+	public boolean ignoresMeta() {return ignoreMeta;}
 }
